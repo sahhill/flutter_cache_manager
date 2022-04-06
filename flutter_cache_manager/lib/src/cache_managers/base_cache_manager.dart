@@ -42,6 +42,7 @@ abstract class BaseCacheManager {
       {String? key, Map<String, String>? headers, bool withProgress});
 
   /// Get the file from the cache and/or online, depending on availability and age.
+  
   /// Downloaded form [url], [headers] can be used for example for authentication.
   /// The files are returned as stream. First the cached file if available, when the
   /// cached file is too old the newly downloaded file is returned afterwards.
