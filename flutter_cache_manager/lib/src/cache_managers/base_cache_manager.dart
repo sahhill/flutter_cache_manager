@@ -41,6 +41,20 @@ abstract class BaseCacheManager {
   Stream<FileResponse> getFileStream(String url,
       {String? key, Map<String, String>? headers, bool withProgress});
 
+  /// Get the file from the cache and/or online, depending on availability and age.
+  /// Downloaded form [url], [headers] can be used for example for authentication.
+  /// The files are returned as stream. First the cached file if available, when the
+  /// cached file is too old the newly downloaded file is returned afterwards.
+  ///
+  /// The [FileResponse] is either a [FileInfo] object for fully downloaded files
+  /// or a [DownloadProgress] object for when a file is being downloaded.
+  /// The [DownloadProgress] objects are only dispatched when [withProgress] is
+  /// set on true and the file is not available in the cache. When the file is
+  /// returned from the cache there will be no progress given, although the file
+  /// might be outdated and a new file is being downloaded in the background.
+  StreamController<FileResponse> getFileStreamController(String url,
+      {String? key, Map<String, String>? headers, bool withProgress});
+
   ///Download the file and add to cache
   Future<FileInfo> downloadFile(String url,
       {String? key, Map<String, String>? authHeaders, bool force = false});

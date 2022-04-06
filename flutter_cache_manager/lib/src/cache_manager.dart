@@ -114,6 +114,15 @@ class CacheManager implements BaseCacheManager {
     return streamController.stream;
   }
 
+  @override
+  StreamController<FileResponse> getFileStreamController(String url,
+      {String? key, Map<String, String>? headers, bool withProgress = false}) {
+    key ??= url;
+    final streamController = StreamController<FileResponse>();
+    _pushFileToStream(streamController, url, key, headers, withProgress);
+    return streamController;
+  }
+
   Future<void> _pushFileToStream(StreamController streamController, String url,
       String? key, Map<String, String>? headers, bool withProgress) async {
     key ??= url;
